@@ -632,8 +632,11 @@
   <div class="cta-section" id="waitlist">
     <h2>Be first in line</h2>
     <p>We're building the mediation layer between humans and the age of agents.</p>
-    <form class="email-form" onsubmit="handleSubmit(event)">
-      <input type="email" placeholder="you@example.com" required>
+    <form class="email-form" action="https://formsubmit.co/daphnedemekas@gmail.com" method="POST">
+      <input type="hidden" name="_subject" value="New Envisage Waitlist Signup">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_next" value="https://envisage-agents.com?joined=1">
+      <input type="email" name="email" placeholder="you@example.com" required>
       <button type="submit">Join Waitlist</button>
     </form>
     <p id="form-success" style="display:none; color: var(--accent); margin-top: 16px; font-size: 14px;">
@@ -655,14 +658,10 @@
       });
     });
 
-    // Simple form handler — swap with real endpoint later
-    function handleSubmit(e) {
-      e.preventDefault();
-      const input = e.target.querySelector('input');
-      const email = input.value;
-      // TODO: POST to your backend or email service (e.g. Buttondown, Mailchimp, Supabase)
-      console.log('Waitlist signup:', email);
-      e.target.style.display = 'none';
+    // Show success message if returning from form submission
+    if (new URLSearchParams(window.location.search).has('joined')) {
+      const form = document.querySelector('.email-form');
+      if (form) form.style.display = 'none';
       document.getElementById('form-success').style.display = 'block';
     }
   </script>

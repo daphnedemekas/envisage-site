@@ -508,11 +508,12 @@
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const email = form.querySelector('input[type="email"]').value;
+      const formBody = 'email=' + encodeURIComponent(email);
       try {
         await fetch(form.action, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email }),
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: formBody,
         });
       } catch (_) {}
       form.style.display = 'none';

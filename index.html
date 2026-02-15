@@ -476,10 +476,7 @@
     <h2 class="section-heading reveal">Imagine an entire research, engineering, and product team &mdash; dedicated to you.</h2>
     <p class="cta-sub reveal reveal-delay-1">We're starting with founders. If you're juggling fundraising, hiring, product, and GTM simultaneously &mdash; this is for you.</p>
     <div class="form-wrapper reveal reveal-delay-2">
-      <form class="email-form" id="waitlist-form" action="https://formsubmit.co/daphnedemekas@gmail.com" method="POST">
-        <input type="hidden" name="_subject" value="Envisage Waitlist">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_next" value="https://envisage-agents.com?joined=1">
+      <form class="email-form" id="waitlist-form" action="https://app.loops.so/api/newsletter-form/cmlod5x0k1h5u0izllzsztzgk" method="POST">
         <input type="email" name="email" placeholder="you@example.com" required>
         <button type="submit">Join waitlist</button>
       </form>
@@ -506,11 +503,21 @@
 
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-    // Success state after form redirect
-    if (new URLSearchParams(window.location.search).has('joined')) {
-      document.getElementById('waitlist-form').style.display = 'none';
+    // Handle form submission via fetch so we stay on page
+    const form = document.getElementById('waitlist-form');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = form.querySelector('input[type="email"]').value;
+      try {
+        await fetch(form.action, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+      } catch (_) {}
+      form.style.display = 'none';
       document.getElementById('form-success').style.display = 'block';
-    }
+    });
   </script>
 </body>
 </html>
